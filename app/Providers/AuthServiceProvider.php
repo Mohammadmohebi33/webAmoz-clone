@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +21,26 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('update-course' , function ($user, $course){
+            if ($user->userHasRole('admin')){
+                return true;
+            }
+            if ($user->id === $course->user_id){
+                return true;
+            }else{
+                return false;
+            }
+        });
+
+        Gate::define('can-comment',  function ($user, $comment){
+            if ($user->userHasRole('admin')){
+                return true;
+            }
+            if ($user->id === $comment->course->user_id){
+                return true;
+            }else{
+                return false;
+            }
+        });
     }
 }

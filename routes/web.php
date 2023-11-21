@@ -1,5 +1,16 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EpisodeController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Models\Purchase;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +24,77 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+Auth::routes();
+
+Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/course/{course}' , [HomeController::class , 'show'])->name('show');
+//Route::get('/profile' , [ProfileController::class , 'getMe'])->name('getMe');
+
+Route::prefix('/profile')->group(function (){
+    Route::get('info',  [ProfileController::class , 'getMe']);
+    Route::get('myCourse',  [ProfileController::class , 'myCourse']);
+    Route::get('myComment',  [ProfileController::class , 'myComment']);
 });
+
+Route::post('/purchase', function (Request $request){
+    Purchase::create([
+        'user_id' => \auth()->user()->id,
+        'course_id' => $request->course_name,
+    ]);
+    return back();
+})->name('purchase');
+
+
+Route::prefix('/panel')->middleware(['auth' , 'hasRole'])->group(function (){
+
+
+    Route::prefix('user')->group(function (){
+        Route::get('/' , [UserController::class , 'index'])->name('users');
+        Route::get('/show/{user}', [UserController::class, 'show'])->name('showUser');
+        Route::get('/create' , [UserController::class , 'create'])->name('createUser');
+        Route::get('/deleted', [UserController::class, 'trashed'])->name('deletedUser');
+        Route::post('/store', [UserController::class ,'store'])->name('storeUser');
+        Route::post('/{user}/restore', [UserController::class , 'restore'])->name('users.restore');
+        Route::patch('/update/{user}' , [UserController::class , 'update'])->name('updateUser');
+        Route::delete('/delete/{user}' , [UserController::class ,'destroy'])->name('deleteUser');
+    });
+
+    Route::prefix('role')->group(function (){
+        Route::get('/' , [RoleController::class , 'index'])->name('roles');
+        Route::get('create' , [RoleController::class , 'create'])->name('createRole');
+        Route::post('store' , [RoleController::class , 'store'])->name('storeRole');
+        Route::delete('/{role}', [RoleController::class, 'destroy'])->name('destroyRole');
+    });
+
+    Route::prefix('category')->group(function (){
+        Route::get('/' , [CategoryController::class , 'index'])->name('category.index');
+        Route::get('/{category}',  [CategoryController::class , 'show'])->name('category.show');
+        Route::post('/create', [CategoryController::class , 'store'])->name('category.store');
+        Route::delete('/{category}', [CategoryController::class , 'destroy'])->name('category.delete');
+    });
+
+    Route::prefix('comment')->group(function (){
+        Route::post('/' , [CommentController::class , 'store'])->name('comment.store');
+        Route::get('/activeComment' , [CommentController::class , 'activeComments'])->name('activeComment.store');
+        Route::get('/rejectComment' , [CommentController::class , 'rejectComments'])->name('rejectComment.store');
+        Route::get('/allComments' , [CommentController::class , 'index'])->name('comment.index');
+        Route::post('/changeStatus/{comment}/{status}' , [CommentController::class , 'changeStatus'])->name('comment.status');
+    });
+
+    Route::prefix('session')->group(function (){
+        Route::get('/course/sessions/{course}' , [EpisodeController::class , 'showCourseSessions'])->name('course.sessions');
+        Route::get('/' , [EpisodeController::class , 'index'])->name('session.index');
+        Route::delete('/{session}' , [EpisodeController::class , 'destroy'])->name('session.destroy');
+        Route::get('/{session}/edit' , [EpisodeController::class , 'edit'])->name('session.edit');
+        Route::get('/session/create' , [EpisodeController::class,  'create'])->name('session.create');
+        Route::post('/session/store' , [EpisodeController::class , 'store'])->name('session.store');
+        Route::match(['put', 'patch'] ,'/session/{session}/update',  [EpisodeController::class, 'update'])->name('session.update');
+    });
+
+    Route::resource('course' , CourseController::class);
+    Route::get('/' , function (){return view('panel.index');})->name('panel');
+});
+
+
