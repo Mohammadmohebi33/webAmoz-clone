@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CourseRequest;
 use App\Models\Category;
 use App\Models\Course;
 use Illuminate\Http\Request;
@@ -40,42 +41,23 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CourseRequest $request)
     {
-        if (!auth()->check()) {
-            //  return redirect()->route('login')->with('message', 'You need to login first!');
-            return back()->with('fail' , 'You need to login first!');
-        }
-
-        $courseData = $request->validate([
-            'title' => ['required' , 'min:4' , "max:60"],
-            'status' => ['required'],
-            'isCompleted' => ['required'],
-            'price' => ['required'],
-            'description' => ['required'],
-            'image' => ['required','mimes:jpeg,png,jpg'],
-            'video' => ['required','mimes:mp4,mov,ogg,qt','max:2000000']
-        ]);
-
+        $courseData = $request->validated();
         //upload image
         $image = $courseData['image'];
         $fileName = md5(auth()->user()->id) .'-'.Str::random(15).$image->clientExtension();
+        $courseData['image'] = $fileName;
         $image->move(public_path('images') , $fileName);
 
         //upload  introduction video
         $video = $courseData['video'];
         $videoName = md5($courseData['title']) .'-'.Str::random(15);
+        $courseData['introduction'] = $videoName;
+        unset($courseData['video']);
         $video->move(public_path('introduction_course') , $videoName);
 
-        $course = auth()->user()->courses()->create([
-            'title' => $courseData['title'],
-            'status' => $courseData['status'],
-            'isCompleted' => $courseData['isCompleted'],
-            'price' => $courseData['price'],
-            'description' => $courseData['description'],
-            'introduction' => $videoName,
-            'image' => $fileName
-        ]);
+        $course = auth()->user()->courses()->create($courseData);
 
 
         if ($request->has('category')){

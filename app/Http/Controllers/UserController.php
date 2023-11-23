@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -13,7 +13,6 @@ class UserController extends Controller
     {
         $this->middleware('isAdmin');
     }
-
 
 
     public function index()
@@ -73,7 +72,6 @@ class UserController extends Controller
 
 
 
-
     public function create()
     {
         $roles = Role::all();
@@ -83,47 +81,29 @@ class UserController extends Controller
 
 
 
-
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $data = $request->validate([
-            'name' => ['required' , 'min:4' , 'max:35'],
-            'email' => ['required' , 'unique:users'],
-            'password' =>['required' , 'min:8' , 'max:35'],
-            'about_me' => ['nullable' , 'max:250'],
-            'status' => ['required'],
-        ]);
-
-        $user = User::query()->create($data);
-        if ($request->has('roles')){
-            $user->roles()->syncWithoutDetaching($request->roles);
-        }
+        $user = User::query()->create($request->validated());
+        $user->roles()->syncWithoutDetaching($request->roles);
+        return to_route('users')->with('message' , 'user create successfully');
     }
 
 
 
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
-        $data = $request->validate([
-            'name' => ['required' , 'min:4' , 'max:35'],
-            'about_me' => ['nullable' , 'max:250'],
-            'status' => ['required'],
-        ]);
-
+        $data = $request->validated();
         $user->update([
             'name' => $data['name'],
-            'status' => $request->get('status'),
+            'status' => $data['status'],
             'about_me' => $data['about_me']
         ]);
 
-        if ($request->has('roles')){
-            $user->roles()->detach();
-            $user->roles()->syncWithoutDetaching($request->roles);
-        }
+        $user->roles()->detach();
+        $user->roles()->syncWithoutDetaching($request->roles);
 
         return to_route('users');
     }
-
 
 
 
