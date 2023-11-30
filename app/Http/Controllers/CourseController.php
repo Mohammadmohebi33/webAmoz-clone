@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CourseRequest;
-use App\Models\Category;
 use App\Models\Course;
 use App\Repositories\Interface\CategoryRepositoryInterface;
 use App\Repositories\Interface\CourseRepositoryInterface;
-use Illuminate\Http\Request;
+use App\Traits\Upload;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
+    use Upload;
 
     private $courseRepo;
     private $categoryRepo;
@@ -50,22 +49,15 @@ class CourseController extends Controller
      */
     public function store(CourseRequest $request)
     {
+        //validation data
         $courseData = $request->validated();
         //upload image
-        //TODO refactor to upload file
-        $image = $courseData['image'];
-        $fileName = md5(auth()->user()->id) .'-'.Str::random(15).$image->clientExtension();
-        $courseData['image'] = $fileName;
-        $image->move(public_path('images') , $fileName);
-
-        //upload  introduction video
-        //TODO refactor to upload file
-        $video = $courseData['video'];
-        $videoName = md5($courseData['title']) .'-'.Str::random(15);
-        $courseData['introduction'] = $videoName;
+        $courseData['image'] = $this->uploadFileCourse($courseData['image'] , 'images');
+        //upload video
+        $courseData['introduction'] = $this->uploadFileCourse($courseData['introduction'] , 'introduction_course');
+        //remove extra data
         unset($courseData['video']);
-        $video->move(public_path('introduction_course') , $videoName);
-
+        //store course
         $this->courseRepo->storeCourse($courseData);
         return to_route('course.index')->with('message' , 'course create successfully');
     }
@@ -100,24 +92,16 @@ class CourseController extends Controller
         $this->courseRepo->update_course($course, $courseData);
 
         if ($request->hasFile('image')) {
-            $image = $courseData['image'];
-            $fileName = md5($course->user_id) . '-' . Str::random(15) . $image->clientExtension();
-
             //remove previous image
-            $previousImage = $course->image;
-            if ($previousImage) {
-                $previousImagePath = public_path('images') . '/' . $previousImage;
-                if (file_exists($previousImagePath)) {
-                    unlink($previousImagePath);
-                }
-
-                $image->move(public_path('images'), $fileName);
-                $this->courseRepo->update_course($course , ['image' => $fileName]);
+            if ($course->image != null) {
+                $previousImagePath = public_path('images') . '/' . $course->image;
+                $this->removeFile($previousImagePath);
+                //upload new image and update data
+                $this->courseRepo->update_course($course , ['image' => $this->uploadFileCourse($courseData['image'] ,'images')]);
             }
         }
 
         return to_route('course.index');
-
     }
 
     /**
