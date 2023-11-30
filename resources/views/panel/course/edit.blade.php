@@ -53,7 +53,7 @@
                             <div class="card-body">
                                 <label>isCompleted</label>
                                 <select class="form-control" name="isCompleted">
-                                    @foreach(['soom' , 'completed' , 'completing'] as $type)
+                                    @foreach(['soon' , 'completed' , 'completing'] as $type)
                                         @if($type === $course->isCompleted)
                                             <option selected value="{{ $type }}">{{ $type }}</option>
                                         @else

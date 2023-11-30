@@ -21,7 +21,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('update-course' , function ($user, $course){
+        Gate::define('course_access' , function ($user, $course){
             if ($user->userHasRole('admin')){
                 return true;
             }

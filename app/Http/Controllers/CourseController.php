@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CourseRequest;
 use App\Models\Category;
 use App\Models\Course;
+use App\Repositories\Interface\CategoryRepositoryInterface;
+use App\Repositories\Interface\CourseRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -12,9 +14,14 @@ use Illuminate\Support\Str;
 class CourseController extends Controller
 {
 
-    public function __construct()
+    private $courseRepo;
+    private $categoryRepo;
+
+    public function __construct(CourseRepositoryInterface $courseRepo , CategoryRepositoryInterface $categoryRepo)
     {
         $this->middleware('isAdmin')->only(['destroy']);
+        $this->courseRepo = $courseRepo;
+        $this->categoryRepo = $categoryRepo;
     }
     /**
      * Display a listing of the resource.
@@ -22,9 +29,9 @@ class CourseController extends Controller
     public function index()
     {
         if (Auth::user()->userHasRole('admin')){
-            $courses = Course::all();
+          $courses =  $this->courseRepo->all();
         }else{
-            $courses = auth::user()->courses;
+           $courses = $this->courseRepo->get_auth_user_courses();
         }
         return view('panel.course.index' , compact('courses'));
     }
@@ -34,7 +41,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        $categories = Category::query()->whereNotNull('parent_id')->get();
+        $categories = $this->categoryRepo->getChildCategory();
         return view('panel.course.create' , compact('categories'));
     }
 
@@ -45,25 +52,21 @@ class CourseController extends Controller
     {
         $courseData = $request->validated();
         //upload image
+        //TODO refactor to upload file
         $image = $courseData['image'];
         $fileName = md5(auth()->user()->id) .'-'.Str::random(15).$image->clientExtension();
         $courseData['image'] = $fileName;
         $image->move(public_path('images') , $fileName);
 
         //upload  introduction video
+        //TODO refactor to upload file
         $video = $courseData['video'];
         $videoName = md5($courseData['title']) .'-'.Str::random(15);
         $courseData['introduction'] = $videoName;
         unset($courseData['video']);
         $video->move(public_path('introduction_course') , $videoName);
 
-        $course = auth()->user()->courses()->create($courseData);
-
-
-        if ($request->has('category')){
-            $course->categories()->syncWithoutDetaching($request->category);
-        }
-
+        $this->courseRepo->storeCourse($courseData);
         return to_route('course.index')->with('message' , 'course create successfully');
     }
 
@@ -72,9 +75,9 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        $this->authorize('update-course' , $course);
-        $sessions = $course->episodes()->latest()->get();
-        return view('panel.course.show' , compact('course' , 'sessions'));
+        $this->authorize('course_access' , $course);
+        $episodes = $this->courseRepo->get_episode($course);
+        return view('panel.course.show' , compact('course' , 'episodes'));
     }
 
     /**
@@ -82,34 +85,19 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        $this->authorize('update-course' , $course);
-        $categories = Category::query()->whereNotNull('parent_id')->get();
+        $this->authorize('course_access' , $course);
+        $categories = $this->categoryRepo->getChildCategory();
         return view('panel.course.edit' , compact('course' , 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Course $course)
+    public function update(CourseRequest $request, Course $course)
     {
-        $this->authorize('update-course' , $course);
-        $courseData = $request->validate([
-            'title' => ['required' , 'min:4' , "max:60"],
-            'status' => ['required'],
-            'isCompleted' => ['required'],
-            'price' => ['required'],
-            'description' => ['required'],
-            'image' => ['nullable','mimes:jpeg,png,jpg'],
-        ]);
-
-
-        $course->update([
-            'title' => $courseData['title'],
-            'status' => $courseData['status'],
-            'isCompleted' => $courseData['isCompleted'],
-            'price' => $courseData['price'],
-            'description' => $courseData['description'],
-        ]);
+        $this->authorize('course_access' , $course);
+        $courseData = $request->validated();
+        $this->courseRepo->update_course($course, $courseData);
 
         if ($request->hasFile('image')) {
             $image = $courseData['image'];
@@ -124,13 +112,8 @@ class CourseController extends Controller
                 }
 
                 $image->move(public_path('images'), $fileName);
-                $course->update(['image' => $fileName]);
+                $this->courseRepo->update_course($course , ['image' => $fileName]);
             }
-        }
-
-        if ($request->has('category')){
-            $course->categories()->detach();
-            $course->categories()->syncWithoutDetaching($request->category);
         }
 
         return to_route('course.index');
@@ -142,7 +125,7 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        $course->delete();
+        $this->courseRepo->destroy($course);
         return back();
     }
 }

@@ -21,14 +21,24 @@ class CourseRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'title' => ['required' , 'min:4' , "max:60"],
             'status' => ['required'],
             'isCompleted' => ['required'],
             'price' => ['required'],
             'description' => ['required'],
-            'image' => ['required','mimes:jpeg,png,jpg'],
-            'video' => ['required','mimes:mp4,mov,ogg,qt','max:2000000']
+//            'image' => ['required','mimes:jpeg,png,jpg'],
+//            'video' => ['required','mimes:mp4,mov,ogg,qt','max:2000000']
         ];
+
+        if (request()->isMethod('PUT') || request()->isMethod('PATCH')) {
+            $rules['image'][] = ['nullable','mimes:jpeg,png,jpg'];
+            $rules['video'][] = ['nullable','mimes:mp4,mov,ogg,qt','max:2000000'];
+        }else{
+            $rules['image'][] = ['required','mimes:jpeg,png,jpg'];
+            $rules['video'][] = ['required','mimes:mp4,mov,ogg,qt','max:2000000'];
+        }
+
+        return $rules;
     }
 }
