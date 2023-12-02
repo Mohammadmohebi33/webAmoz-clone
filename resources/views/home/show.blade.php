@@ -177,7 +177,26 @@
 
         <div class="container">
             @if(\Illuminate\Support\Facades\Auth::check())
+                <div class="comments">
+                <div class="comment-main">
+                    <div class="ct-header">
+                        <h3>نظرات ( {{count($comments)}} )</h3>
+                        <p>نظر خود را در مورد این مقاله مطرح کنید</p>
+                    </div>
+                    <form action="{{route('comment.store')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="course_id" value="{{$course->id}}">
+                        <div class="ct-row">
+                            <div class="ct-textarea"><textarea class="txt ct-textarea-field" name="comment"></textarea></div>
+                        </div>
+                        <div class="ct-row">
+                            <div class="send-comment"><button class="btn i-t">ثبت نظر</button></div>
+                        </div>
+
+                    </form>
+                </div>
             @include('home.comments')
+                </div>
             @else
                 <h2>ابتدا لاگین کنید</h2>
             @endif
