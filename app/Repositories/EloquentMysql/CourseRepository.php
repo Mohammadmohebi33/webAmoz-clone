@@ -1,11 +1,12 @@
 <?php
 
 
-namespace App\Repositories;
+namespace App\Repositories\EloquentMysql;
 
 use App\Models\Course;
 use App\Repositories\Interface\CourseRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
+use function auth;
 
 class CourseRepository implements CourseRepositoryInterface {
 

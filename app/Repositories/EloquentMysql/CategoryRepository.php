@@ -1,11 +1,10 @@
 <?php
 
 
-namespace App\Repositories;
+namespace App\Repositories\EloquentMysql;
 
 use App\Models\Category;
 use App\Repositories\Interface\CategoryRepositoryInterface;
-
 
 
 class CategoryRepository implements CategoryRepositoryInterface{

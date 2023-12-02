@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Repositories\CategoryRepository;
-use App\Repositories\CourseRepository;
 use App\Repositories\Interface\CategoryRepositoryInterface;
 use App\Repositories\Interface\CourseRepositoryInterface;
+use App\Repositories\EloquentMysql\CategoryRepository;
+use App\Repositories\EloquentMysql\CourseRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
