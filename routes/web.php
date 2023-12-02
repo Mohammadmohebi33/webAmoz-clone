@@ -97,4 +97,6 @@ Route::prefix('/panel')->middleware(['auth' , 'hasRole'])->group(function (){
     Route::get('/' , function (){return view('panel.index');})->name('panel');
 });
 
+Route::get('/download/{file}' , [\App\Http\Controllers\FileController::class , 'download'])->name('download.file');
+
 

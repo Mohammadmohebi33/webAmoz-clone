@@ -47,19 +47,21 @@ class CommentController extends Controller
                 $comments = $course->comments()->where('status' , 'deactivate')->latest()->paginate(30);
             }
         }
-
         return view('panel.comments.index' , compact('comments'));
     }
+
+
 
     public function store(Request $request)
     {
         auth()->user()->comments()->create([
             'body' => $request->comment,
-            'course_id' => $request->course_id
+            'course_id' => $request->course_id,
+            'parent_id' => $request->parent_id,
         ]);
-
         return back();
     }
+
 
 
     public function changeStatus(Comment $comment , string $status)

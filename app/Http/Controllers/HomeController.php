@@ -32,7 +32,7 @@ class HomeController extends Controller
 
     public function show(Course $course)
     {
-        $comments = $course->comments()->where('status' , 'active')->latest()->get();
+        $comments = $course->comments()->where('status' , 'active')->where('parent_id' , null)->latest()->get();
         $totalTime = 0;
         foreach ($course->episodes as $session){
             $totalTime += $session->time;

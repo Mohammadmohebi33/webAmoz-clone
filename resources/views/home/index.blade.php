@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{asset('home-file/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('home-file/css/custom.css')}}">
     <link rel="stylesheet" href="{{asset('home-file/css/font/font.css')}}">
+    <link rel="stylesheet" href="{{asset('home-file/css/modal.css')}}">
     <link rel="stylesheet" href="{{asset('home-file/css/responsive.css')}}" media="(max-width:991px)">
 </head>
 <body >
@@ -233,4 +234,5 @@
 <script src="{{asset('home-file/js/jquery-3.4.1.min.js')}}"></script>
 <script src="{{asset('home-file/js/js.js')}}"></script>
 <script src="{{asset('home-file/js/countDownTimer.js')}}"></script>
+<script src="{{asset('home-file/js/modal.js')}}"></script>
 </body>

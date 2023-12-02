@@ -155,7 +155,7 @@
                         <source src="{{asset('introduction_course/'. $course->introduction)}}" type="video/mp4">
                     </video>
                 </div>
-                <a href="#" class="episode-download">دانلود اشنایی با دوره</a>
+                <a href="{{route('download.file' , $course->introduction)}}" class="episode-download">دانلود اشنایی با دوره</a>
           {{--                توضیحات دوره--}}
                 <div class="course-description">
                     <div class="course-description-title">توضیحات دوره</div>
