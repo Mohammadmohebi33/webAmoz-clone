@@ -1,13 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Panel;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CourseRequest;
 use App\Models\Course;
 use App\Repositories\Interface\CategoryRepositoryInterface;
 use App\Repositories\Interface\CourseRepositoryInterface;
 use App\Traits\Upload;
 use Illuminate\Support\Facades\Auth;
+use function back;
+use function public_path;
+use function to_route;
+use function view;
 
 class CourseController extends Controller
 {

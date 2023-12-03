@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Panel;
 
+use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use function auth;
+use function back;
+use function view;
 
 class CommentController extends Controller
 {

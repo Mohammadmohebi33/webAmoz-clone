@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Home;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use function auth;
+use function dd;
+use function view;
 
 class ProfileController extends Controller
 {

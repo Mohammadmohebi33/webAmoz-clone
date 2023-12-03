@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Panel;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use function back;
+use function to_route;
+use function view;
 
 class CategoryController extends Controller
 {

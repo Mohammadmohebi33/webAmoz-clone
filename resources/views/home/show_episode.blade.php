@@ -23,7 +23,7 @@
                                 <span class="detail-type">رایگان</span>
                             @endif
                             <span class="detail-time">{{ gmdate("i:s", $episode->time) }}</span>
-                            <a class="detail-download">
+                            <a class="detail-download" href="{{route('download.file' , [$episode->video_url, 'sessions'])}}">
                                 <i class="icon-download"></i>
                             </a>
                         </div>

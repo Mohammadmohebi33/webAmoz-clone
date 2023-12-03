@@ -1,12 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Panel;
 
+use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Episode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use ProtoneMedia\LaravelFFMpeg\FFMpeg\FFProbe;
+use function back;
+use function public_path;
+use function request;
+use function to_route;
+use function view;
 
 class EpisodeController extends Controller
 {

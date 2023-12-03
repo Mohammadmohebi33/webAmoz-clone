@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Home;
 
+use App\Http\Controllers\Controller;
 use App\Models\Course;
-use Illuminate\Http\Request;
+use function view;
 
 class HomeController extends Controller
 {

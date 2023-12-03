@@ -1,12 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Panel;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
 use App\Repositories\Interface\UserRepositoryInterface;
 use App\Traits\Upload;
+use function collect;
+use function request;
+use function to_route;
+use function view;
 
 class UserController extends Controller
 {

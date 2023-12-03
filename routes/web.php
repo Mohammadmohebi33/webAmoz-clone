@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\EpisodeController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Home\ProfileController;
+use App\Http\Controllers\Panel\CategoryController;
+use App\Http\Controllers\Panel\CommentController;
+use App\Http\Controllers\Panel\CourseController;
+use App\Http\Controllers\Panel\EpisodeController;
+use App\Http\Controllers\Panel\RoleController;
+use App\Http\Controllers\Panel\UserController;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -98,6 +98,6 @@ Route::prefix('/panel')->middleware(['auth' , 'hasRole'])->group(function (){
     Route::get('/' , function (){return view('panel.index');})->name('panel');
 });
 
-Route::get('/download/{file}' , [\App\Http\Controllers\FileController::class , 'download'])->name('download.file');
+Route::get('/download/{file}/{dir}' , [\App\Http\Controllers\Home\FileController::class , 'download'])->name('download.file');
 
 
