@@ -54,7 +54,7 @@ class CourseController extends Controller
         //upload image
         $courseData['image'] = $this->uploadFileCourse($courseData['image'] , 'images');
         //upload video
-        $courseData['introduction'] = $this->uploadFileCourse($courseData['introduction'] , 'introduction_course');
+        $courseData['introduction'] = $this->uploadFileCourse($courseData['video'] , 'introduction_course');
         //remove extra data
         unset($courseData['video']);
         //store course
