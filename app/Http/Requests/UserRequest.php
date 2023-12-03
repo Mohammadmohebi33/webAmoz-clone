@@ -22,25 +22,26 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
 
-        if (request()->getMethod() == 'POST'){
-            return [
-                'name' => ['required' , 'min:4' , 'max:35'],
-                'email' => ['required' , 'unique:users'],
-                'password' =>['required' , 'min:8' , 'max:35'],
-                'about_me' => ['nullable' , 'max:250'],
+        $rules = [];
+        if (request()->getMethod() == 'POST') {
+            $rules =  [
+                'name' => ['required', 'min:4', 'max:35'],
+                'email' => ['required', 'unique:users'],
+                'password' => ['required', 'min:8', 'max:35'],
+                'about_me' => ['nullable', 'max:250'],
                 'status' => ['required'],
                 'roles' => ['required']
             ];
-        }
-
-        elseif (request()->getMethod() == 'PATCH'){
-            return [
-                'name' => ['required' , 'min:4' , 'max:35'],
-                'about_me' => ['nullable' , 'max:250'],
+        } elseif (request()->getMethod() == 'PATCH') {
+            $rules =  [
+                'name' => ['required', 'min:4', 'max:35'],
+                'about_me' => ['nullable', 'max:250'],
                 'status' => ['required'],
-                'roles' => ['required']
+                'roles' => ['required'],
+                'image' => ['nullable','mimes:jpeg,png,jpg'],
             ];
         }
-
+        return $rules;
     }
 }
+

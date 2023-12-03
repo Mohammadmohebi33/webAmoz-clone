@@ -5,44 +5,34 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\Role;
 use App\Models\User;
+use App\Repositories\Interface\UserRepositoryInterface;
+use App\Traits\Upload;
 
 class UserController extends Controller
 {
+    use Upload;
 
-    public function __construct()
+    private $userRepo;
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->middleware('isAdmin');
+        $this->userRepo = $userRepository;
     }
 
 
     public function index()
     {
-        $users=[];
-
+        $users = collect([]);
         if (request()->has('roles')){
             foreach (request()->roles as $role){
-                if (in_array($role, Role::query()->pluck('role_name')->toArray())){
-                    $roleUsers = Role::query()->where('role_name', $role)->first()->users;
-                    $users = array_merge($users, $roleUsers->all());
-                }
+                $roleUsers = $this->userRepo->getUserWithRole($role);
+                $users = $users->merge($roleUsers)->unique('id');;
             }
-
-            $emails = array_column($users, 'email');
-            $uniqueEmails = array_unique($emails);
-
-            $uniqueUsers = [];
-            foreach ($users as $user) {
-                if (in_array($user['email'], $uniqueEmails)) {
-                    $uniqueUsers[] = $user;
-                    unset($uniqueEmails[array_search($user['email'], $uniqueEmails)]);
-                }
-            }
-            return view('panel.users.index' , compact('uniqueUsers'));
+            return view('panel.users.index' , compact('users'));
         }
 
-
-        $uniqueUsers = User::all();
-        return view('panel.users.index' , compact('uniqueUsers'));
+        $users = $this->userRepo->all();
+        return view('panel.users.index' , compact('users'));
     }
 
 
@@ -50,14 +40,14 @@ class UserController extends Controller
 
     public function trashed()
     {
-        $uniqueUsers = User::onlyTrashed()->get();
-        return view('panel.users.deleted' , compact('uniqueUsers'));
+        $users = $this->userRepo->userTrashed();
+        return view('panel.users.deleted' , compact('users'));
     }
 
 
     public function restore($user)
     {
-        User::query()->where('id', $user)->withTrashed()->restore();
+        $this->userRepo->restore($user);
         return to_route('users');
     }
 
@@ -83,8 +73,7 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        $user = User::query()->create($request->validated());
-        $user->roles()->syncWithoutDetaching($request->roles);
+        $this->userRepo->store($request->validated());
         return to_route('users')->with('message' , 'user create successfully');
     }
 
@@ -92,15 +81,14 @@ class UserController extends Controller
 
     public function update(UserRequest $request, User $user)
     {
-        $data = $request->validated();
-        $user->update([
-            'name' => $data['name'],
-            'status' => $data['status'],
-            'about_me' => $data['about_me']
-        ]);
+        $userData = $request->validated();
 
-        $user->roles()->detach();
-        $user->roles()->syncWithoutDetaching($request->roles);
+        if(!isset($userData['image'])){
+            $this->userRepo->update($user, $userData);
+        }else{
+            $userData['image'] =  $this->uploadFileCourse($userData['image'] , 'dist/img');
+            $this->userRepo->update($user, $userData);
+        }
 
         return to_route('users');
     }
@@ -109,9 +97,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        $user->status = 'disable';
-        $user->delete();
-        $user->save();
-        return to_route('users');
+       $this->userRepo->destroy($user);
+       return to_route('users');
     }
 }

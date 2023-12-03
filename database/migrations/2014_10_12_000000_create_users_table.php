@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('status' , ['disable' , 'able'])->default('able');
             $table->integer('money')->default(0);
             $table->text('about_me')->nullable();
-            $table->string('image')->default('defaultImage.png');
+            $table->string('image')->default('avatar.png');
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

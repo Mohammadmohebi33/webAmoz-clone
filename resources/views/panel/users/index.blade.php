@@ -71,7 +71,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($uniqueUsers as $user)
+                    @foreach($users as $user)
                     <tr>
                         <td>
                             {{$user->id}}
@@ -89,7 +89,7 @@
                             {{$user->email}}
                         </td>
                         <td>
-                            <img alt="Avatar" class="table-avatar" src="{{asset('dist/img/avatar.png')}}" style="width: 80px">
+                            <img alt="Avatar" class="table-avatar" src="{{asset('dist/img/'.$user->image)}}" style="width: 80px">
                         </td>
                         <td class="project-state">
 

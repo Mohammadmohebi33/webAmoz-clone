@@ -24,7 +24,7 @@
                         @endif
 
 
-                        <form id="quickForm" novalidate="novalidate" method="post" action="{{route('updateUser' , $user->id)}}">
+                        <form id="quickForm" novalidate="novalidate" method="post" action="{{route('updateUser' , $user->id)}}" enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
                             <div class="card-body">
@@ -59,6 +59,19 @@
                                     <label class="custom-control-label" for="{{$role->id}}">{{$role->role_name}}</label>
                                 </div>
                                 @endforeach
+                            </div>
+
+                            <div class="card-body">
+                                <label for="exampleInputFile">Image course</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input name="image" type="file" class="custom-file-input" id="exampleInputFile">
+                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Upload</span>
+                                    </div>
+                                </div>
                             </div>
 
 

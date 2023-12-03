@@ -71,7 +71,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($uniqueUsers as $user)
+                @foreach($users as $user)
                 <tr>
                     <td>
                         {{$user->id}}
