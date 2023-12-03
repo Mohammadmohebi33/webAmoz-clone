@@ -12,14 +12,19 @@ class EpisodeController extends Controller
 {
     public function index()
     {
-        $episodes = Episode::query()->paginate(10);
-        return view('panel.episodes.index', compact('episodes'));
+        if (request()->has('course_id')){
+            $episodes = Course::query()->find(\request()->input('course_id'))->episodes()->paginate(10);
+        }else{
+            $episodes = Episode::query()->paginate(10);
+        }
+        $courses = Course::all();
+        return view('panel.episodes.index', compact('episodes', 'courses'));
     }
 
 
     public function showCourseSessions(Course $course)
     {
-        $episodes = $course->sessions()->paginate(10);
+        $episodes = $course->episodes()->paginate(10);
         return view('panel.episodes.index' , compact('episodes'));
     }
 

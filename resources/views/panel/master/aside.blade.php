@@ -122,7 +122,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-soap"></i>
                             <p>
-                                Sessions
+                                Episodes
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -130,14 +130,14 @@
                             <li class="nav-item">
                                 <a href="{{route('episodes.index')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>all Session</p>
+                                    <p>all Episodes</p>
                                 </a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="{{route('episodes.create')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>create Session</p>
+                                    <p>create Episode</p>
                                 </a>
                             </li>
                         </ul>
