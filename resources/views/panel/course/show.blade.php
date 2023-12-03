@@ -187,11 +187,11 @@
                                                         <a class="btn btn-primary btn-sm" href="">
                                                             <i class="fas fa-folder"></i>View
                                                         </a>
-                                                        <a class="btn btn-info btn-sm" href="{{route('session.edit', $session->id)}}">
+                                                        <a class="btn btn-info btn-sm" href="{{route('episodes.edit', $session->id)}}">
                                                             <i class="fas fa-pencil-alt"></i>Edit
                                                         </a>
 
-                                                        <form action="{{route('session.destroy' , $session->id)}}" method="post">
+                                                        <form action="{{route('episodes.destroy' , $session->id)}}" method="post">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button class="btn btn-danger btn-sm">Delete</button>

@@ -34,25 +34,25 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($sessions as $session)
+                    @foreach($episodes as $episode)
                         <tr>
-                            <td>{{$session->id}}</td>
-                            <td>{{$session->title}}</td>
+                            <td>{{$episode->id}}</td>
+                            <td>{{$episode->title}}</td>
                             <td>
                                 <video width="20%" controls="" height="10%">
-                                    <source src="/sessions/{{$session->video_url}}" type="video/mp4">
+                                    <source src="/sessions/{{$episode->video_url}}" type="video/mp4">
                                 </video>
                             </td>
-                            <td>{{$session->course->title}}</td>
+                            <td>{{$episode->course->title}}</td>
                             <td class="project-actions">
                                 <a class="btn btn-primary btn-sm" href="">
                                     <i class="fas fa-folder"></i>View
                                 </a>
-                                <a class="btn btn-info btn-sm" href="{{route('session.edit', $session->id)}}">
+                                <a class="btn btn-info btn-sm" href="{{route('episodes.edit', $episode->id)}}">
                                     <i class="fas fa-pencil-alt"></i>Edit
                                 </a>
 
-                                <form action="{{route('session.destroy' , $session->id)}}" method="post">
+                                <form action="{{route('episodes.destroy' , $episode->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm">Delete</button>
@@ -64,7 +64,7 @@
                     </tbody>
                 </table>
             </div>
-                        {{$sessions->links()}}
+                        {{$episodes->links()}}
         </div>
     </section>
 @endsection

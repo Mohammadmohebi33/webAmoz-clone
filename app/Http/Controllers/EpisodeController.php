@@ -12,22 +12,22 @@ class EpisodeController extends Controller
 {
     public function index()
     {
-        $sessions = Episode::query()->paginate(10);
-        return view('panel.session.index', compact('sessions'));
+        $episodes = Episode::query()->paginate(10);
+        return view('panel.episodes.index', compact('episodes'));
     }
 
 
     public function showCourseSessions(Course $course)
     {
-        $sessions = $course->sessions()->paginate(10);
-        return view('panel.session.index' , compact('sessions'));
+        $episodes = $course->sessions()->paginate(10);
+        return view('panel.episodes.index' , compact('episodes'));
     }
 
 
     public function create()
     {
         $courses = Course::all();
-        return view('panel.session.create' , compact('courses'));
+        return view('panel.episodes.create' , compact('courses'));
     }
 
 
@@ -61,18 +61,18 @@ class EpisodeController extends Controller
             'status' => $data['status']
         ]);
         $course->update(['time' => $course->time + $duration]);
-        return to_route('session.index');
+        return to_route('episodes.index');
     }
 
 
-    public function edit(Episode $session)
+    public function edit(Episode $episode)
     {
         $courses = Course::all();
-        return view('panel.session.edit' , compact('session', 'courses'));
+        return view('panel.episodes.edit' , compact('episode', 'courses'));
     }
 
 
-    public function update(Request $request, Episode $session)
+    public function update(Request $request, Episode $episode)
     {
         $data = $request->validate([
             'title' => 'required',
@@ -80,7 +80,7 @@ class EpisodeController extends Controller
             'video' => 'nullable|mimes:mp4,mov,ogg,qt|max:200000'
         ]);
 
-        $session->update([
+        $episode->update([
             'title' => $data['title'],
             'course_id' => $data['course_id'],
         ]);
@@ -90,7 +90,7 @@ class EpisodeController extends Controller
             $videoName = md5($data['course_id']) .'-'.Str::random(15);
 
             //remove previous video
-            $previousVideo = $session->video_url;
+            $previousVideo = $episode->video_url;
             if ($previousVideo) {
                 $previousImagePath = public_path('sessions') . '/' . $previousVideo;
                 if (file_exists($previousImagePath)) {
@@ -98,18 +98,18 @@ class EpisodeController extends Controller
                 }
 
                 $video->move(public_path('sessions'), $videoName);
-                $session->update(['video_url' => $videoName]);
+                $episode->update(['video_url' => $videoName]);
             }
         }
 
-        return to_route('session.index');
+        return to_route('episodes.index');
     }
 
 
 
-    public function destroy(Episode $session)
+    public function destroy(Episode $episode)
     {
-        $session->delete();
+        $episode->delete();
         return back();
     }
 }

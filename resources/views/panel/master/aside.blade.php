@@ -128,14 +128,14 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{route('session.index')}}" class="nav-link">
+                                <a href="{{route('episodes.index')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>all Session</p>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{route('session.create')}}" class="nav-link">
+                                <a href="{{route('episodes.create')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>create Session</p>
                                 </a>
@@ -160,7 +160,7 @@
 {{--                            </li>--}}
 
 {{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route('session.create')}}" class="nav-link">--}}
+{{--                                <a href="{{route('episodes.create')}}" class="nav-link">--}}
 {{--                                    <i class="far fa-circle nav-icon"></i>--}}
 {{--                                    <p>خرید های من</p>--}}
 {{--                                </a>--}}
@@ -168,7 +168,7 @@
 
 
 {{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route('session.create')}}" class="nav-link">--}}
+{{--                                <a href="{{route('episodes.create')}}" class="nav-link">--}}
 {{--                                    <i class="far fa-circle nav-icon"></i>--}}
 {{--                                    <p>دوره های من</p>--}}
 {{--                                </a>--}}

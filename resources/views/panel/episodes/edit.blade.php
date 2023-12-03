@@ -18,33 +18,28 @@
                             </div>
                         @endif
 
-                        <form id="quickForm" novalidate="novalidate" method="post" action="{{route('session.store')}}" enctype="multipart/form-data">
+                        <form id="quickForm" novalidate="novalidate" method="post" action="{{route('episodes.update' , $session->id)}}" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
 
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">title</label>
-                                    <input type="text" name="title" class="form-control" id="exampleInputEmail1" placeholder="Enter title">
+                                    <input type="text" name="title" class="form-control" id="exampleInputEmail1" placeholder="Enter title" value="{{$session->title}}">
                                 </div>
                             </div>
 
 
                             <div class="card-body">
-                                <label>Select Course</label>
+                                <label>Select Category</label>
                                 <select  class="form-control" name="course_id">
-                                    <option value="">___</option>
                                     @foreach($courses as $course)
-                                        <option value="{{$course->id}}">{{$course->title}}</option>
+                                        <option
+                                            @if($course->title === $session->course->title)
+                                                selected
+                                            @endif
+                                            value="{{$course->id}}">{{$course->title}}</option>
                                     @endforeach
-                                </select>
-                            </div>
-
-
-                            <div class="card-body">
-                                <label>Status</label>
-                                <select class="form-control" name="status">
-                                    <option selected value="free">رایگان</option>
-                                    <option value="lock">غیر رایگان</option>
                                 </select>
                             </div>
 
@@ -72,3 +67,4 @@
         </div>
     </section>
 @endsection
+

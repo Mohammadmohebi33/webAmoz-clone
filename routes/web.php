@@ -83,14 +83,15 @@ Route::prefix('/panel')->middleware(['auth' , 'hasRole'])->group(function (){
         Route::post('/changeStatus/{comment}/{status}' , [CommentController::class , 'changeStatus'])->name('comment.status');
     });
 
-    Route::prefix('session')->group(function (){
+
+    Route::prefix('episodes')->group(function (){
         Route::get('/course/sessions/{course}' , [EpisodeController::class , 'showCourseSessions'])->name('course.sessions');
-        Route::get('/' , [EpisodeController::class , 'index'])->name('session.index');
-        Route::delete('/{session}' , [EpisodeController::class , 'destroy'])->name('session.destroy');
-        Route::get('/{session}/edit' , [EpisodeController::class , 'edit'])->name('session.edit');
-        Route::get('/session/create' , [EpisodeController::class,  'create'])->name('session.create');
-        Route::post('/session/store' , [EpisodeController::class , 'store'])->name('session.store');
-        Route::match(['put', 'patch'] ,'/session/{session}/update',  [EpisodeController::class, 'update'])->name('session.update');
+        Route::get('/' , [EpisodeController::class , 'index'])->name('episodes.index');
+        Route::delete('/{episodes}' , [EpisodeController::class , 'destroy'])->name('episodes.destroy');
+        Route::get('/{episodes}/edit' , [EpisodeController::class , 'edit'])->name('episodes.edit');
+        Route::get('/episodes/create' , [EpisodeController::class,  'create'])->name('episodes.create');
+        Route::post('/episodes/store' , [EpisodeController::class , 'store'])->name('episodes.store');
+        Route::match(['put', 'patch'] ,'/episodes/{episodes}/update',  [EpisodeController::class, 'update'])->name('episodes.update');
     });
 
     Route::resource('course' , CourseController::class);
