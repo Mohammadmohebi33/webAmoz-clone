@@ -39,7 +39,6 @@
                     <tr>
                         <th>#</th>
                         <th>name</th>
-                        <th>type</th>
                         <th>action</th>
                         <th>status</th>
                     </tr>
@@ -49,27 +48,16 @@
                         <tr>
                             <td>{{$category->id}}</td>
                             <td>{{$category->name}}</td>
-
-                            @if($category->parent_id != null)
-                            <td>sub category</td>
-                            @else
-                                <td>main category</td>
-
-                            @endif
-
                             <td class="project-actions">
-
                                 <a class="btn btn-info btn-sm" href="{{route('category.show' , $category->id)}}">
                                     <i class="fas fa-pencil-alt"></i>Edit
                                 </a>
-
                                 <form action="{{route('category.delete' , $category->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm">Delete</button>
                                 </form>
                             </td>
-
                             <td><input id="{{$category->id}}" onchange="changeStatus({{ $category->id }})" data-url="{{ route('category.status', $category->id) }}" type="checkbox" @if($category->status) checked @endif></td>
                             @endforeach
                         </tr>

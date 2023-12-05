@@ -73,6 +73,7 @@
 
 <!-- jQuery -->
 @include('panel.master.js')
+@include('panel.alerts.sweetalert.success')
 </body>
 </html>
 

@@ -38,7 +38,7 @@ class CategoryController extends Controller
             'slug' => Str::slug($request->category),
         ]);
 
-        return back();
+        return back()->with('swal-success' , 'category create successfully');
     }
 
 
