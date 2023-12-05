@@ -192,18 +192,18 @@
     <nav id="navigation" class="navigation">
         <div class="container">
             <ul class="nav">
-                @foreach($categories as $category)
-                    <li class="main-menu has-sub"><a href="#">{{$category->name}}</a>
-                        <div class="sub-menu">
-                            <div class="container">
-                                @foreach($category->subCategory as $child)
-                                    <div><a href="{{route('index' , $child->slug)}}">{{$child->name}}</a></div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="triangle"></div>
-                    </li>
-                @endforeach
+{{--                @foreach($categories as $category)--}}
+{{--                    <li class="main-menu has-sub"><a href="#">{{$category->name}}</a>--}}
+{{--                        <div class="sub-menu">--}}
+{{--                            <div class="container">--}}
+{{--                                @foreach($category->subCategory as $child)--}}
+{{--                                    <div><a href="{{route('index' , $child->slug)}}">{{$child->name}}</a></div>--}}
+{{--                                @endforeach--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="triangle"></div>--}}
+{{--                    </li>--}}
+{{--                @endforeach--}}
             </ul>
 
             <div class="dark-light">

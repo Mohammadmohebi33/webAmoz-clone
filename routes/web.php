@@ -40,7 +40,7 @@ Route::prefix('/profile')->group(function (){
 
 Route::post('/purchase', function (Request $request){
     Purchase::create([
-        'user_id' => \auth()->user()->id,
+        'user_id' => auth()->user()->id,
         'course_id' => $request->course_name,
     ]);
     return back();
@@ -73,6 +73,7 @@ Route::prefix('/panel')->middleware(['auth' , 'hasRole'])->group(function (){
         Route::get('/{category}',  [CategoryController::class , 'show'])->name('category.show');
         Route::post('/create', [CategoryController::class , 'store'])->name('category.store');
         Route::delete('/{category}', [CategoryController::class , 'destroy'])->name('category.delete');
+        Route::get('/status/{category}' , [CategoryController::class , 'status'])->name('category.status');
     });
 
     Route::prefix('comment')->group(function (){

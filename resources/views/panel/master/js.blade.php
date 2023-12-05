@@ -36,4 +36,7 @@
     $('#summernote').summernote({
         height: 400
     });
+
 </script>
+
+@yield('js')

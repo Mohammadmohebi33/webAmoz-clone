@@ -29,19 +29,6 @@
                 <label for="exampleInputEmail1">category</label>
                 <input name="category" type="text" class="form-control" id="exampleInputEmail1" placeholder="category name">
             </div>
-                    <div class="card-body">
-                        <label>Select</label>
-                        <select name="parent_id" class="form-control">
-                            <option value="">select</option>
-                            @foreach($categories as $category)
-                                @if($category->parent_id == null)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                @endif
-                            @endforeach
-
-                        </select>
-                    </div>
-
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
@@ -54,6 +41,7 @@
                         <th>name</th>
                         <th>type</th>
                         <th>action</th>
+                        <th>status</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -81,6 +69,8 @@
                                     <button class="btn btn-danger btn-sm">Delete</button>
                                 </form>
                             </td>
+
+                            <td><input id="{{$category->id}}" onchange="changeStatus({{ $category->id }})" data-url="{{ route('category.status', $category->id) }}" type="checkbox" @if($category->status) checked @endif></td>
                             @endforeach
                         </tr>
                     </tbody>
@@ -90,4 +80,30 @@
         {{--            {{$users->links()}}--}}
         </div>
     </section>
+@endsection
+
+@section('js')
+    <script type="text/javascript">
+        function changeStatus(id){
+            var element = $("#" + id)
+            var url = element.attr('data-url')
+            var elementValue = !element.prop('checked');
+
+            $.ajax({
+                url : url,
+                type : "GET",
+                success : function(response){
+                    if(response.status){
+                        if(response.checked)
+                            element.prop('checked', true);
+                        else
+                            element.prop('checked', false);
+                    }
+                    else{
+                        element.prop('checked', elementValue);
+                    }
+                }
+            })
+        }
+    </script>
 @endsection

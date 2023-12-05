@@ -36,7 +36,6 @@ class CategoryController extends Controller
         Category::query()->create([
             'name' => $request->category,
             'slug' => Str::slug($request->category),
-            'parent_id' => $request->has('parent_id')  ? $request->parent_id : null,
         ]);
 
         return back();
@@ -47,5 +46,24 @@ class CategoryController extends Controller
     {
         $category->delete();
         return to_route('category.index')->with('successfully' , 'category deleted successfully');
+    }
+
+
+    public function status(Category $category){
+
+        $category->status = $category->status == 0 ? 1 : 0;
+        $result = $category->save();
+        if($result){
+            if($category->status == 0){
+                return response()->json(['status' => true, 'checked' => false]);
+            }
+            else{
+                return response()->json(['status' => true, 'checked' => true]);
+            }
+        }
+        else{
+            return response()->json(['status' => false]);
+        }
+
     }
 }

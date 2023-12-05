@@ -9,6 +9,8 @@ class Role extends Model
 {
     use HasFactory;
 
+    public static $roleName = ['admin' , 'author' , 'member'];
+
     protected $guarded = [];
 
 

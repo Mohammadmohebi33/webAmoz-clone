@@ -20,8 +20,8 @@ class CustomServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        view()->composer('home.index' , function ($view){
-            $view->with('categories', Category::query()->whereNull('parent_id')->get());
-        });
+//        view()->composer('home.index' , function ($view){
+//            $view->with('categories', Category::query()->whereNull('parent_id')->get());
+//        });
     }
 }
