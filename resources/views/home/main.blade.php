@@ -53,17 +53,20 @@
                                 <p>45%</p>
                                 تخفیف
                             </div>
+                            <div class="course-status">
+                               {{$course->isCompleted}}
+                            </div>
                             <div class="card-img"><img src="{{asset('images/'.$course->title.'/'.$course->image[2])}}" alt="php"></div>
                             <div class="card-title"><h2>php course</h2></div>
                             <div class="card-body">
-                                <img src="img/profile.jpg" alt="محمد نیکو">
+                                <img src="{{asset('images/'.$course->title.'/'.$course->image[0])}}" alt="محمد نیکو">
                                 <span>محمد نیکو</span>
                             </div>
                             <div class="card-details">
                                 <div class="time">135:40:00</div>
                                 <div class="price">
-                                    <div class="discountPrice">159,000</div>
-                                    <div class="endPrice">270,000</div>
+                                    <div class="discountPrice">{{$course->price}}</div>
+                                    <div class="endPrice">{{$course->price}}تومان </div>
                                 </div>
                             </div>
                         </a>

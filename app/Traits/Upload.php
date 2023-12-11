@@ -25,10 +25,11 @@ trait Upload{
         return $imagesName;
     }
 
+
+
     public function uploadVideoCourse($file, $folderName)
     {
         $fileName = md5(auth()->user()->id) .'-'.Str::random(15).$file->clientExtension();
-    //    Image::make($file)->resize(450 , 960)->save(public_path($folderName).$fileName);
         $file->move(public_path($folderName) , $fileName);
         return $fileName;
     }
