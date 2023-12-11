@@ -20,9 +20,10 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::query()->orderBy('created_at' , 'desc')->paginate(10);
         return view('panel.category.index' , compact('categories'));
     }
+
 
 
     public function show(Category $category)
@@ -42,10 +43,24 @@ class CategoryController extends Controller
     }
 
 
+    public function update(Request $request , Category $category)
+    {
+        $category->update([
+            'name' => $request->category,
+            'slug' => Str::slug($request->category),
+            'status' => $category->status,
+
+        ]);
+
+        return redirect()->route('category.index')->with('swal-success' , 'category update successfully');
+    }
+
+
+
     public function destroy(Category $category)
     {
         $category->delete();
-        return to_route('category.index')->with('successfully' , 'category deleted successfully');
+        return redirect()->route('category.index')->with('swal-success' , 'category deleted successfully');
     }
 
 

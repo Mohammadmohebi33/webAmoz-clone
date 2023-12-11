@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/course/{course}' , [HomeController::class , 'show'])->name('show');
 //Route::get('/profile' , [ProfileController::class , 'getMe'])->name('getMe');
@@ -72,6 +73,7 @@ Route::prefix('/panel')->middleware(['auth' , 'hasRole'])->group(function (){
         Route::get('/' , [CategoryController::class , 'index'])->name('category.index');
         Route::get('/{category}',  [CategoryController::class , 'show'])->name('category.show');
         Route::post('/create', [CategoryController::class , 'store'])->name('category.store');
+        Route::patch('/update/{category}' , [CategoryController::class, 'update'])->name('category.update');
         Route::delete('/{category}', [CategoryController::class , 'destroy'])->name('category.delete');
         Route::get('/status/{category}' , [CategoryController::class , 'status'])->name('category.status');
     });

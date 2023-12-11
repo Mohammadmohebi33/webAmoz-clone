@@ -65,10 +65,16 @@
                 </table>
             </div>
             </div>
-        {{--            {{$users->links()}}--}}
+            <div class="d-flex justify-content-center ">
+                {{$categories->links()}}
+            </div>
+
         </div>
     </section>
 @endsection
+
+
+
 
 @section('js')
     <script type="text/javascript">

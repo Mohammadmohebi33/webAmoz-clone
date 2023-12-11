@@ -8,6 +8,7 @@ use App\Repositories\Interface\CourseRepositoryInterface;
 use App\Repositories\EloquentMysql\CategoryRepository;
 use App\Repositories\EloquentMysql\CourseRepository;
 use App\Repositories\Interface\UserRepositoryInterface;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,6 +28,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Paginator::useBootstrap();
     }
 }

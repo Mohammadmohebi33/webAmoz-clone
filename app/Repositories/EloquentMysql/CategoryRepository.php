@@ -16,6 +16,6 @@ class CategoryRepository implements CategoryRepositoryInterface{
 
     public function getChildCategory()
     {
-       return Category::query()->whereNotNull('parent_id')->get();
+       return Category::all();
     }
 }

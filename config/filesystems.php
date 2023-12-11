@@ -73,4 +73,11 @@ return [
         public_path('storage') => storage_path('app/public'),
     ],
 
+    'images' => [
+        ['width' => 150 , 'height' => 100] ,
+        ['width' => 450, 'height' => 960] ,
+        ['width' => 800 , 'height' => 1200] ,
+        ['width' => 500 , 'height' => 500] ,
+    ]
+
 ];

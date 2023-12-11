@@ -9,6 +9,7 @@ use App\Repositories\Interface\CategoryRepositoryInterface;
 use App\Repositories\Interface\CourseRepositoryInterface;
 use App\Traits\Upload;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Image;
 use function back;
 use function public_path;
 use function to_route;
@@ -37,6 +38,7 @@ class CourseController extends Controller
         }else{
            $courses = $this->courseRepo->get_auth_user_courses();
         }
+
         return view('panel.course.index' , compact('courses'));
     }
 
@@ -57,9 +59,9 @@ class CourseController extends Controller
         //validation data
         $courseData = $request->validated();
         //upload image
-        $courseData['image'] = $this->uploadFileCourse($courseData['image'] , 'images');
+        $courseData['image'] = $this->uploadImageCourse($courseData['image'] , 'images' , $courseData['title']);
         //upload video
-        $courseData['introduction'] = $this->uploadFileCourse($courseData['video'] , 'introduction_course');
+        $courseData['introduction'] = $this->uploadVideoCourse($courseData['video'] , 'introduction_course');
         //remove extra data
         unset($courseData['video']);
         //store course

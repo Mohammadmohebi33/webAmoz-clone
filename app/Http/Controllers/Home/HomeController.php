@@ -25,8 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $courses = Course::query()->orderByDesc('created_at')->paginate(9);
-        return view('home.courses' , compact('courses'));
+      //  $courses = Course::query()->orderByDesc('created_at')->paginate(9);
+        $latestCourse = Course::query()->orderByDesc('created_at')->take(8)->get();
+        return view('home.main' , compact('latestCourse'));
     }
 
 
