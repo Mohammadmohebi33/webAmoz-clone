@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('image');
             $table->string('introduction');
+            $table->integer('total_sales')->default(0);
             $table->integer('time')->default(0);
             $table->timestamps();
         });

@@ -8,6 +8,7 @@ use App\Http\Controllers\Panel\CourseController;
 use App\Http\Controllers\Panel\EpisodeController;
 use App\Http\Controllers\Panel\RoleController;
 use App\Http\Controllers\Panel\UserController;
+use App\Models\Course;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,10 +41,17 @@ Route::prefix('/profile')->group(function (){
 });
 
 Route::post('/purchase', function (Request $request){
+
     Purchase::create([
         'user_id' => auth()->user()->id,
         'course_id' => $request->course_name,
     ]);
+
+    $course = Course::query()->find($request->course_name);
+    $course->update([
+        'total_sales' => $course->total_sales  + 1
+    ]);
+
     return back();
 })->name('purchase');
 
@@ -61,14 +69,12 @@ Route::prefix('/panel')->middleware(['auth' , 'hasRole'])->group(function (){
         Route::patch('/update/{user}' , [UserController::class , 'update'])->name('updateUser');
         Route::delete('/delete/{user}' , [UserController::class ,'destroy'])->name('deleteUser');
     });
-
     Route::prefix('role')->group(function (){
         Route::get('/' , [RoleController::class , 'index'])->name('roles');
         Route::get('create' , [RoleController::class , 'create'])->name('createRole');
         Route::post('store' , [RoleController::class , 'store'])->name('storeRole');
         Route::delete('/{role}', [RoleController::class, 'destroy'])->name('destroyRole');
     });
-
     Route::prefix('category')->group(function (){
         Route::get('/' , [CategoryController::class , 'index'])->name('category.index');
         Route::get('/{category}',  [CategoryController::class , 'show'])->name('category.show');
@@ -77,7 +83,6 @@ Route::prefix('/panel')->middleware(['auth' , 'hasRole'])->group(function (){
         Route::delete('/{category}', [CategoryController::class , 'destroy'])->name('category.delete');
         Route::get('/status/{category}' , [CategoryController::class , 'status'])->name('category.status');
     });
-
     Route::prefix('comment')->group(function (){
         Route::post('/' , [CommentController::class , 'store'])->name('comment.store');
         Route::get('/activeComment' , [CommentController::class , 'activeComments'])->name('activeComment.store');
@@ -85,8 +90,6 @@ Route::prefix('/panel')->middleware(['auth' , 'hasRole'])->group(function (){
         Route::get('/allComments' , [CommentController::class , 'index'])->name('comment.index');
         Route::post('/changeStatus/{comment}/{status}' , [CommentController::class , 'changeStatus'])->name('comment.status');
     });
-
-
     Route::prefix('episodes')->group(function (){
         Route::get('/course/sessions/{course}' , [EpisodeController::class , 'showCourseSessions'])->name('course.sessions');
         Route::get('/' , [EpisodeController::class , 'index'])->name('episodes.index');
@@ -96,8 +99,8 @@ Route::prefix('/panel')->middleware(['auth' , 'hasRole'])->group(function (){
         Route::post('/episodes/store' , [EpisodeController::class , 'store'])->name('episodes.store');
         Route::match(['put', 'patch'] ,'/episodes/{episodes}/update',  [EpisodeController::class, 'update'])->name('episodes.update');
     });
-
     Route::resource('course' , CourseController::class);
+
     Route::get('/' , function (){return view('panel.index');})->name('panel');
 });
 

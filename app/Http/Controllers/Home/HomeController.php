@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use Illuminate\Support\Facades\DB;
 use function view;
 
 class HomeController extends Controller
@@ -25,9 +26,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-      //  $courses = Course::query()->orderByDesc('created_at')->paginate(9);
+        $popularCourse = Course::query()->orderByDesc('total_sales' )->take(8)->get();
         $latestCourse = Course::query()->orderByDesc('created_at')->take(8)->get();
-        return view('home.main' , compact('latestCourse'));
+        return view('home.main' , compact('latestCourse' , 'popularCourse'));
     }
 
 
