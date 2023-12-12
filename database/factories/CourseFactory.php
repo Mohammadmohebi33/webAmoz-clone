@@ -22,7 +22,7 @@ class CourseFactory extends Factory
             'status'=> $this->faker->randomElement(['active', 'pending', 'inactive']),
             'description' => $this->faker->text,
             'isCompleted' => $this->faker->randomElement(['soon', 'completed', 'completing']),
-            'price' => 2000,
+            'price' => 50000,
             'user_id' => User::query()->inRandomOrder()->first(),
             'image' =>'defaultImage.png',
             'introduction' => $this->faker->text(200),

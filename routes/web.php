@@ -31,6 +31,7 @@ Auth::routes();
 
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/all/{course_parameter}' , [HomeController::class , 'all'])->name('all');
 Route::get('/course/{course}' , [HomeController::class , 'show'])->name('show');
 //Route::get('/profile' , [ProfileController::class , 'getMe'])->name('getMe');
 

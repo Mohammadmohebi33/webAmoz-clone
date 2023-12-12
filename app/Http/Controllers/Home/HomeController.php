@@ -26,9 +26,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $popularCourse = Course::query()->orderByDesc('total_sales' )->take(8)->get();
+        $popularCourse = Course::query()->orderByDesc('total_sales')->take(8)->get();
         $latestCourse = Course::query()->orderByDesc('created_at')->take(8)->get();
         return view('home.main' , compact('latestCourse' , 'popularCourse'));
+    }
+
+
+    public function all($para)
+    {
+        $courses = Course::query()->orderByDesc($para)->paginate(12);
+        return view('home.all', compact('courses'));
     }
 
 

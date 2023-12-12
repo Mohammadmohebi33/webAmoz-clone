@@ -42,7 +42,7 @@
         <div class="box-filter">
             <div class="b-head">
                 <h2>جدید ترین دوره ها</h2>
-                <a href="all-courses.html">مشاهده همه</a>
+                <a href="{{route('all' , ['course_parameter'=>'created_at'])}}">مشاهده همه</a>
             </div>
 
             <div class="posts">
@@ -78,7 +78,7 @@
         <div class="box-filter">
             <div class="b-head">
                 <h2>پر مخاطب ترین دوره ها</h2>
-                <a href="all-courses.html">مشاهده همه</a>
+                <a href="{{route('all' , ['course_parameter' => 'total_sales'])}}">مشاهده همه</a>
             </div>
             <div class="posts">
                 @foreach($popularCourse as $course)
@@ -94,7 +94,7 @@
                             <div class="card-img"><img src="{{asset('images/'.$course->title.'/'.$course->image[2])}}" alt="reactjs"></div>
                             <div class="card-title"><h2>دوره مقدماتی تا پیشرفته reactJs</h2></div>
                             <div class="card-body">
-                                <img src="img/profile.jpg" alt="محمد نیکو">
+                                <img src="{{asset('images/'.$course->title.'/'.$course->image[0])}}" alt="محمد نیکو">
                                 <span>محمد نیکو</span>
                             </div>
                             <div class="card-details">
