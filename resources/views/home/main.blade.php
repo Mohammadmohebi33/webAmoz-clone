@@ -83,7 +83,7 @@
             <div class="posts">
                 @foreach($popularCourse as $course)
                     <div class="col">
-                        <a href="react.html">
+                        <a href="{{route('show' , $course->id)}}">
                             <div class="course-status">
                                 تکمیل شده
                             </div>
