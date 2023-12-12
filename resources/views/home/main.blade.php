@@ -48,7 +48,7 @@
             <div class="posts">
                 @foreach($latestCourse as $course)
                     <div class="col">
-                        <a href="php.html">
+                        <a href="{{route('show' , $course->id)}}">
                             <div class="discountBadge">
                                 <p>45%</p>
                                 تخفیف
@@ -117,7 +117,7 @@
         </div>
         <div class="articles">
             <div class="col">
-                <a href="react.html">
+                <a href="{{route('show' , $course->id)}}">
                     <div class="card-img"><img src="img/banner/reactjs.png" alt="reactjs"></div>
                     <div class="card-title"><h2>
                             فاسد در فریم ورک لاراول
