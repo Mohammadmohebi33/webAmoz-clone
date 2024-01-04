@@ -31,6 +31,11 @@ class CourseObserver
             $course->categories()->detach();
             $course->categories()->syncWithoutDetaching(request()->input('category'));
         }
+
+        Cache::forget('latestCourse');
+        Cache::forget('popularCourse');
+        Cache::forget('total_sales');
+        Cache::forget('created_at');
     }
 
     /**

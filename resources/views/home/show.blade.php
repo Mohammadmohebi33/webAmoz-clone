@@ -106,9 +106,9 @@
                     </div>
                     <div class="course-teacher-details">
                         <div class="top-part">
-                            <a href="https://webamooz.net/tutor/mohammadnikoo/"><img alt="محمد نیکو" class="img-fluid lazyloaded" src="{{asset('images/'.$course->user->image)}}" loading="lazy">
+                            <a href="https://webamooz.net/tutor/mohammadnikoo/"><img alt="محمد نیکو" class="img-fluid lazyloaded" src="{{'http://localhost:8000/storage/user/'.$course->user->image}}" loading="lazy">
                                 <noscript>
-                                    <img src="{{asset('images/'.$course->user->image)}}"></noscript>
+                                    <img src="{{'http://localhost:8000/storage/user/'.$course->user->image}}"></noscript>
                             </a>
                             <div class="name">
                                 <a href="https://webamooz.net/tutor/mohammadnikoo/" class="btn-link"><h6>{{$course->user->name}}</h6>

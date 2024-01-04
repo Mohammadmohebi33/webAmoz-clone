@@ -8,23 +8,23 @@
                 <div class="col">
                     <a href="{{route('show' , $course->id)}}">
                         <div class="course-status">
-                            تکمیل شده
+                            {{$course->isCompleted}}
                         </div>
                         <div class="discountBadge">
                             <p>45%</p>
                             تخفیف
                         </div>
-                        <div class="card-img"><img src="{{asset('images/'.$course->title.'/'.$course->image[2])}}" alt="reactjs"></div>
+                        <div class="card-img"><img src="{{'http://localhost:8000/storage/images/'.$course->title.'/'. $course->image[3]}}" alt="reactjs"></div>
                         <div class="card-title"><h2>{{$course->title}}</h2></div>
                         <div class="card-body">
-                            <img src="img/profile.jpg" alt="محمد نیکو">
-                            <span>محمد نیکو</span>
+                            <img src="{{'http://localhost:8000/storage/user/'.$course->user->image}}" alt="محمد نیکو">
+                            <span>{{$course->user->name}}</span>
                         </div>
                         <div class="card-details">
-                            <div class="time">135:40:00</div>
+                            <div class="time">{{ gmdate("H:i:s", $course->time) }}</div>
                             <div class="price">
-                                <div class="discountPrice">159,000</div>
-                                <div class="endPrice">270,000</div>
+{{--                                <div class="discountPrice">159,000</div>--}}
+                                <div class="endPrice">{{$course->price}}  تومان </div>
                             </div>
                         </div>
                     </a>
