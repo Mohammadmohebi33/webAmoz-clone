@@ -1,6 +1,5 @@
 @extends('home.index')
 @section('content')
-
     <article class="container article">
         <div class="ads">
             <a href="" rel="nofollow noopener"><img src="home/img/ads/1440px/test.jpg" alt=""></a>

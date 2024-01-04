@@ -56,8 +56,8 @@
                             <div class="course-status">
                                {{$course->isCompleted}}
                             </div>
-                            <div class="card-img"><img src="{{asset('images/'.$course->title.'/'.$course->image[2])}}" alt="php"></div>
-                            <div class="card-title"><h2>php course</h2></div>
+                            <div class="card-img"><img src="{{'http://localhost:8000/storage/images/'.$course->title.'/'. $course->image[3]}}" alt="php"></div>
+                            <div class="card-title"><h2>{{$course->title}}</h2></div>
                             <div class="card-body">
                                 <img src="{{asset('images/'.$course->title.'/'.$course->image[0])}}" alt="محمد نیکو">
                                 <span>محمد نیکو</span>
@@ -91,7 +91,7 @@
                                 <p>45%</p>
                                 تخفیف
                             </div>
-                            <div class="card-img"><img src="{{asset('images/'.$course->title.'/'.$course->image[2])}}" alt="reactjs"></div>
+                            <div class="card-img"><img src="{{'http://localhost:8000/storage/images/'.$course->title.'/'. $course->image[3]}}" alt="reactjs"></div>
                             <div class="card-title"><h2>دوره مقدماتی تا پیشرفته reactJs</h2></div>
                             <div class="card-body">
                                 <img src="{{asset('images/'.$course->title.'/'.$course->image[0])}}" alt="محمد نیکو">
@@ -117,7 +117,7 @@
         </div>
         <div class="articles">
             <div class="col">
-                <a href="{{route('show' , $course->id)}}">
+                <a href="">
                     <div class="card-img"><img src="img/banner/reactjs.png" alt="reactjs"></div>
                     <div class="card-title"><h2>
                             فاسد در فریم ورک لاراول

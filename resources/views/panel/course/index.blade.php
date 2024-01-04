@@ -48,7 +48,8 @@
                             @if($course->image == null)
                             <img alt="Avatar" class="table-avatar" src="{{asset('dist/img/avatar.png')}}" style="width: 80px">
                             @else
-                                <img alt="Avatar" class="table-avatar" src="{{asset('images/'.$course->title.'/'.$course->image[0])}}" style="width: 80px">
+                                <img alt="Avatar" class="table-avatar" src="{{'http://localhost:8000/storage/images/'.$course->title.'/'. $course->image[0]}}" style="width: 80px">
+{{--                                <img alt="Avatar" class="table-avatar" src="{{'storage/app/public/images/'.$course->title.'/'.$course->image[0]}}" style="width: 80px">--}}
                             @endif
                         </td>
 

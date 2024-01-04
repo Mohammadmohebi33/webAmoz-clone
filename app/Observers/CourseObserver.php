@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Course;
+use Illuminate\Support\Facades\Cache;
 
 class CourseObserver
 {
@@ -14,6 +15,11 @@ class CourseObserver
         if (request()->input('category') != null){
             $course->categories()->syncWithoutDetaching(request()->input('category'));
         }
+
+        Cache::forget('latestCourse');
+        Cache::forget('popularCourse');
+        Cache::forget('total_sales');
+        Cache::forget('created_at');
     }
 
     /**
@@ -32,6 +38,10 @@ class CourseObserver
      */
     public function deleted(Course $course): void
     {
+        Cache::forget('latestCourse');
+        Cache::forget('popularCourse');
+        Cache::forget('total_sales');
+        Cache::forget('created_at');
     }
 
     /**

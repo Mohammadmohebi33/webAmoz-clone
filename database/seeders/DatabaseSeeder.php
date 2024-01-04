@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Cache;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,7 +20,7 @@ class DatabaseSeeder extends Seeder
 
       //    User::factory(10)->create();
       //    Category::factory(8)->create();
-           Course::factory(10)->create();
+//           Course::factory(10)->create();
 
 
         // \App\Models\User::factory()->create([
@@ -27,10 +28,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-     //create roles :
+    // create roles :
 //     foreach (Role::$roleName as $role){
 //         Role::query()->create(['role_name' => $role]);
 //     }
+
+   //     Cache::flush();
 
     }
 }

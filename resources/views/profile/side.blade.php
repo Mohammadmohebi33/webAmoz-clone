@@ -1,5 +1,5 @@
 <div class="profile-card pb-0"><!-- start avatar box -->
-    <img src="assets/images/avatar.jpg" class="profile-avatar img-thumbnail">
+    <img src="{{'http://localhost:8000/storage/user/'.\Illuminate\Support\Facades\Auth::user()->image}}" class="profile-avatar img-thumbnail">
     <p class="font-13 text-center">امیرحسین رضایی</p>
     <div class="row border-top">
         <div class="col-6 border-end text-center">
@@ -15,13 +15,10 @@
 
 <div class="profile-card"><!-- start sidebar menu -->
     <ul class="profile-sidebar">
-        <li><a href="profile.html"><i class="far fa-user-circle align-middle me-2"></i>پروفایل</a></li>
-        <li><a href="profile-order.html"><i class="fas fa-shopping-cart align-middle me-2"></i>دوره های من </a></li>
+        <li><a href="{{route('profile.index')}}"><i class="far fa-user-circle align-middle me-2"></i>پروفایل</a></li>
+        <li><a href="{{route('profile.course')}}"><i class="fas fa-shopping-cart align-middle me-2"></i>دوره های من </a></li>
         <li><a href="profile-comment.html"><i class="far fa-comment align-middle me-2"></i>نظرات</a></li>
 
 
     </ul>
 </div><!-- end sidebar menu -->
-
-
-</div>

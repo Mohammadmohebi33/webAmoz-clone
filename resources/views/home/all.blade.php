@@ -15,7 +15,7 @@
                             تخفیف
                         </div>
                         <div class="card-img"><img src="{{asset('images/'.$course->title.'/'.$course->image[2])}}" alt="reactjs"></div>
-                        <div class="card-title"><h2>دوره مقدماتی تا پیشرفته reactJs</h2></div>
+                        <div class="card-title"><h2>{{$course->title}}</h2></div>
                         <div class="card-body">
                             <img src="img/profile.jpg" alt="محمد نیکو">
                             <span>محمد نیکو</span>

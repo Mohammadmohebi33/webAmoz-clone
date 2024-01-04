@@ -13,6 +13,7 @@ use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +32,7 @@ Auth::routes();
 
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
-Route::get('/all/{course_parameter}' , [HomeController::class , 'all'])->name('all');
+Route::get('/all' , [HomeController::class , 'all'])->name('all');
 Route::get('/course/{course}' , [HomeController::class , 'show'])->name('show');
 Route::get('/profile' , [ProfileController::class , 'getMe'])->name('getMe');
 
@@ -43,10 +44,11 @@ Route::prefix('/profile')->group(function (){
 
 Route::post('/purchase', function (Request $request){
 
-    Purchase::create([
-        'user_id' => auth()->user()->id,
-        'course_id' => $request->course_name,
-    ]);
+//    auth()->user()->courseUser()->syncWithoutDetaching([
+//        'course_id' => $request->course_name,
+//    ]);
+
+    auth()->user()->courseUser()->attach($request->course_name, ['created_at' => now(), 'updated_at' => now()]);
 
     $course = Course::query()->find($request->course_name);
     $course->update([
@@ -106,5 +108,13 @@ Route::prefix('/panel')->middleware(['auth' , 'hasRole'])->group(function (){
 });
 
 Route::get('/download/{file}/{dir}' , [\App\Http\Controllers\Home\FileController::class , 'download'])->name('download.file');
+Route::get('/get-video/{path}', [HomeController::class , 'getVideo'])->name('getVideo');
+
+
+Route::prefix('/profile')->group(function (){
+    Route::get('/' , [ProfileController::class , 'getMe'])->name('profile.index');
+    Route::put('/' , [ProfileController::class , 'update'])->name('profile.update');
+    Route::get('/myCourse' , [ProfileController::class , 'getCourse'])->name('profile.course');
+});
 
 

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
-
-<!- https://t.me/sabzrea ->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,12 +20,13 @@
         <div class="row">
             <div class="col-lg-3">
             @include('profile.side')
+            </div>
             <div class="col-lg-9">
             @yield('content')<!-- end personal info edit box -->
             </div>
         </div>
     </div>
-    </div>
+
 </main><!-- end main -->
 
 <script src="{{asset('asset-profile/assets/js/jquery.min.js')}}"></script>
@@ -37,5 +36,5 @@
 <script src="{{asset('asset-profile/assets/js/script.js')}}"></script>
 </body>
 
-<!- https://t.me/sabzrea ->
+
 </html>

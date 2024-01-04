@@ -80,7 +80,7 @@
                     <div class="product-info-box">
                         <div class="product-meta-info-list">
                             <div class="total_sales">
-                                تعداد دانشجو : <span>{{$course->purchase()->count()}}</span>
+                                تعداد دانشجو : <span>{{$course->userCourse()->count()}}</span>
                             </div>
                             <div class="meta-info-unit one">
                                 <span class="title">تعداد جلسات منتشر شده :  </span>
@@ -147,15 +147,18 @@
 {{--                        </div>--}}
 {{--                    </di>--}}
 
+
+
                 </div>
             </div>
             <div class="content-left">
                 <div class="preview">
                     <video width="100%" controls="">
-                        <source src="{{asset('introduction_course/'. $course->introduction)}}" type="video/mp4">
+
+                        <source src="{{ route('getVideo', $course->introduction) }}" type="video/mp4">
                     </video>
                 </div>
-                <a href="{{route('download.file' , [$course->introduction , 'introduction_course'])}}" class="episode-download">دانلود اشنایی با دوره</a>
+{{--                <a href="{{route('download.file' , [ , 'introduction_course'])}}" class="episode-download">دانلود اشنایی با دوره</a>--}}
           {{--                توضیحات دوره--}}
                 <div class="course-description">
                     <div class="course-description-title">توضیحات دوره</div>

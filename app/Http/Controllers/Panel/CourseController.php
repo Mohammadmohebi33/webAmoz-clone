@@ -9,6 +9,8 @@ use App\Repositories\Interface\CategoryRepositoryInterface;
 use App\Repositories\Interface\CourseRepositoryInterface;
 use App\Traits\Upload;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Image;
 use function back;
 use function public_path;

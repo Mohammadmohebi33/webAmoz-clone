@@ -22,6 +22,7 @@
         <link rel="stylesheet" href="{{asset('home-file/css/style.css')}}">
         <link rel="stylesheet" href="{{asset('home-file/css/font/font.css')}}">
         <link rel="stylesheet" href="{{asset('home-file/css/responsive.css')}}" media="(max-width:991px)">
+        <link rel="stylesheet" href="{{asset('sweetalert/sweetalert2.css')}}">
     </head>
 </head>
 <body >
@@ -161,7 +162,7 @@
                     <div class="user-menu-account">
                         <div class="user-image">
                             @if(\Illuminate\Support\Facades\Auth::user()->image)
-                                <img src=" {{asset('images/'.\Illuminate\Support\Facades\Auth::user()->image)}}">
+                                <img src="{{'http://localhost:8000/storage/user/'.\Illuminate\Support\Facades\Auth::user()->image}}">
                             @else
                                 <img src="{{asset('home-file/img/profile.jpg')}}" alt="desction">
                             @endif
@@ -172,7 +173,7 @@
                             <ul>
                                 <li><a href="">{{auth()->user()->name}}</a></li>
                                 <li><a href="">خرید های من</a></li>
-                                <li><a href="">داشبورد</a></li>
+                                <li><a href="{{route('profile.index')}}">داشبورد</a></li>
 
                                 <div class="row">
                                     <li>
@@ -223,6 +224,7 @@
 <main id="index">
     @yield('content')
 </main>
+
 <footer>
     <a class="scrollToTop"></a>
     <div class="webamooz">
@@ -235,5 +237,9 @@
 <script src="{{asset('home-file/js/js.js')}}"></script>
 <script src="{{asset('home-file/js/countDownTimer.js')}}"></script>
 <script src="{{asset('home-file/js/modal.js')}}"></script>
+<script src="{{ asset('sweetalert/sweetalert2.min.js') }}"></script>
+
+@include('panel.alerts.sweetalert.success')
+@include('panel.alerts.sweetalert.error')
 
 </body>

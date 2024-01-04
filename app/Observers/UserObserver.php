@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Models\User;
 
-class UserObserver
+class  UserObserver
 {
     /**
      * Handle the User "created" event.
@@ -19,8 +19,11 @@ class UserObserver
      */
     public function updated(User $user): void
     {
-        $user->roles()->detach();
-        $user->roles()->syncWithoutDetaching(request()->input('roles'));
+        if (request()->has('roles')){
+            $user->roles()->detach();
+            $user->roles()->syncWithoutDetaching(request()->input('roles'));
+        }
+
     }
 
     /**

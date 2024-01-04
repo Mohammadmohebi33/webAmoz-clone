@@ -40,14 +40,17 @@ class Course extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function purchase(){
-        return $this->hasMany(Purchase::class);
+    public function userCourse()
+    {
+        return $this->belongsToMany(User::class , 'purchases');
     }
 
 
+
     public function isPurchase($userId):bool{
-        foreach ($this->purchase()->get() as $item){
-            if ($item->user_id == $userId){
+        foreach ($this->userCourse()->get() as $item){
+
+            if ($item->id== $userId){
                 return true;
             }
         }
