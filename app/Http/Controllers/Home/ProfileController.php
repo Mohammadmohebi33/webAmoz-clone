@@ -45,7 +45,7 @@ class ProfileController extends Controller
 
     public function myComment(){
         $comments = auth()->user()->comments()->latest()->get();
-        return view('profile.' , compact('comments'));
+        return view('profile.comments' , compact('comments'));
     }
 
 

@@ -26,11 +26,7 @@ Route::get('/all' , [HomeController::class , 'all'])->name('all');
 Route::get('/course/{course}' , [HomeController::class , 'show'])->name('show');
 Route::get('/profile' , [ProfileController::class , 'getMe'])->name('getMe');
 
-Route::prefix('/profile')->group(function (){
-    Route::get('info',  [ProfileController::class , 'getMe']);
-    Route::get('myCourse',  [ProfileController::class , 'myCourse']);
-    Route::get('myComment',  [ProfileController::class , 'myComment']);
-});
+
 
 Route::post('/purchase', function (Request $request){
     auth()->user()->courseUser()->attach($request->course_name, ['created_at' => now(), 'updated_at' => now()]);
@@ -52,6 +48,7 @@ Route::prefix('/profile')->group(function (){
     Route::get('/' , [ProfileController::class , 'getMe'])->name('profile.index');
     Route::put('/' , [ProfileController::class , 'update'])->name('profile.update');
     Route::get('/myCourse' , [ProfileController::class , 'getCourse'])->name('profile.course');
+    Route::get('/myComments' , [ProfileController::class , 'myComment'])->name('profile.comment');
 });
 
 

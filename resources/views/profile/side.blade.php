@@ -17,7 +17,7 @@
     <ul class="profile-sidebar">
         <li><a href="{{route('profile.index')}}"><i class="far fa-user-circle align-middle me-2"></i>پروفایل</a></li>
         <li><a href="{{route('profile.course')}}"><i class="fas fa-shopping-cart align-middle me-2"></i>دوره های من </a></li>
-        <li><a href="profile-comment.html"><i class="far fa-comment align-middle me-2"></i>نظرات</a></li>
+        <li><a href="{{route('profile.comment')}}"><i class="far fa-comment align-middle me-2"></i>نظرات</a></li>
 
 
     </ul>
