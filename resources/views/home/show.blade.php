@@ -48,8 +48,10 @@
 
                                 <form method="post" action="{{route('purchase')}}">
                                     @csrf
-                                    <input type="hidden" value="{{$course->id}}" name="course_name">
-                                    <button class="mycourse btn buy">خرید دوره</button>
+                                    <input type="hidden" value="{{$course->id}}" name="course_id">
+                                    <input type="hidden" value="{{$course->title}}" name="course_title">
+                                    <input type="hidden" value="{{$course->price}}" name="price">
+                                    <button class="mycourse btn buy" type="submit">خرید دوره</button>
                                 </form>
                                 <p class="mycourse d-none">شما مدرس این دوره هستید</p>
                                 <p class="mycourse d-none">شما این دوره رو خریداری کرده اید</p>

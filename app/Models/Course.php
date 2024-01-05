@@ -42,7 +42,7 @@ class Course extends Model
 
     public function userCourse()
     {
-        return $this->belongsToMany(User::class , 'purchases');
+        return $this->belongsToMany(User::class , 'payments');
     }
 
 

@@ -29,13 +29,32 @@ Route::get('/profile' , [ProfileController::class , 'getMe'])->name('getMe');
 
 
 Route::post('/purchase', function (Request $request){
-    auth()->user()->courseUser()->attach($request->course_name, ['created_at' => now(), 'updated_at' => now()]);
-    $course = Course::query()->find($request->course_name);
-    $course->update([
-        'total_sales' => $course->total_sales  + 1
+    $data = $request->validate([
+        "price" => "integer",
+        "course_id" => "required",
+        "course_title" => "required",
     ]);
-    return back();
+
+
+    return getPayment($data);
 })->name('purchase');
+
+
+
+Route::get('/redirectBack',function (Request $request){
+    $status = $request->input('status');
+    $token = $request->input('token');
+
+    if ($status == 1)
+    {
+        $detail = verifyPayment($token);
+
+        if ($detail["message"] == "success")
+        {
+            return view('home.redirectBack', compact('detail'));
+        }
+    }
+});
 
 
 

@@ -29,11 +29,11 @@ class DatabaseSeeder extends Seeder
         // ]);
 
     // create roles :
-//     foreach (Role::$roleName as $role){
-//         Role::query()->create(['role_name' => $role]);
-//     }
+     foreach (Role::$roleName as $role){
+         Role::query()->create(['role_name' => $role]);
+     }
 
-   //     Cache::flush();
+        Cache::flush();
 
     }
 }

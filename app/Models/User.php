@@ -56,7 +56,7 @@ class User extends Authenticatable
 
     public function courseUser()
     {
-        return $this->belongsToMany(Course::class , 'purchases');
+        return $this->belongsToMany(Course::class , 'payments');
     }
 
 
@@ -99,7 +99,8 @@ class User extends Authenticatable
     }
 
 
-    public function purchase(){
-        return $this->hasMany(Purchase::class);
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }
